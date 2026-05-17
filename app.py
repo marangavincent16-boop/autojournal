@@ -14,10 +14,15 @@ st.markdown("""
 
   html, body, [class*="css"] {
     font-family: 'Montserrat', sans-serif;
-    background-color: #f8f5f0 !important;
+    background-color: #f4f1eb !important;
     color: #1a1a2e !important;
   }
-  .main .block-container { padding: 0 0.8rem 4rem 0.8rem; max-width: 480px; margin: 0 auto; }
+  .stApp, .stAppViewContainer, section[data-testid="stAppViewContainer"],
+  .stAppViewBlockContainer, div[data-testid="stVerticalBlock"],
+  div[data-testid="stAppViewContainer"] > div {
+    background-color: #f4f1eb !important;
+  }
+  .main .block-container { padding: 0 0.8rem 4rem 0.8rem; max-width: 480px; margin: 0 auto; background: #f4f1eb !important; }
   #MainMenu, footer, header { visibility: hidden; }
   [data-testid="collapsedControl"] { display: none; }
 
@@ -310,10 +315,10 @@ st.markdown("""
     color: #c0392b; font-family: 'Montserrat', sans-serif; font-size: 0.82rem;
   }
   .stSpinner > div { border-top-color: #6c63ff !important; }
-  .stTabs [data-baseweb="tab-list"] { background: #f0eeff; border-radius: 10px; gap: 2px; padding: 4px; }
+  .stTabs [data-baseweb="tab-list"] { background: #e8e4f0; border-radius: 10px; gap: 2px; padding: 4px; border: 1px solid #ddd; }
   .stTabs [data-baseweb="tab"] {
     font-family: 'Oswald', sans-serif; font-weight: 400;
-    font-size: 0.82rem; letter-spacing: 0.12em; color: #999;
+    font-size: 0.82rem; letter-spacing: 0.12em; color: #333;
     border-radius: 8px; padding: 0.4rem 0.8rem;
   }
   .stTabs [aria-selected="true"] { background: #6c63ff !important; color: white !important; }
@@ -538,10 +543,14 @@ def render_history(sb):
         entries = result.data
         valid = []
         for e in entries:
+            if not isinstance(e, dict):
+                continue
             raw = e.get("extracted_data", {})
             if isinstance(raw, str):
                 try: raw = json.loads(raw)
                 except: raw = {}
+            if not isinstance(raw, dict):
+                raw = {}
             if not is_empty_entry(raw):
                 e["_parsed"] = raw
                 valid.append(e)
