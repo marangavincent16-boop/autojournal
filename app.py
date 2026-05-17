@@ -323,7 +323,7 @@ def build_system_prompt(dt: datetime) -> str:
 def extract_journal(user_text: str, dt: datetime) -> dict:
     client = Groq(api_key=st.secrets["GROQ_API_KEY"])
     response = client.chat.completions.create(
-        model="llama3-8b-8192",
+        model="llama-3.1-8b-instant",
         messages=[
             {"role": "system", "content": build_system_prompt(dt)},
             {"role": "user", "content": user_text},
