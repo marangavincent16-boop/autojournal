@@ -1,5 +1,5 @@
 import streamlit as st
-import google.generativeai as genai
+from groq import Groq
 import json
 import re
 from datetime import datetime
@@ -321,13 +321,17 @@ def build_system_prompt(dt: datetime) -> str:
 # AI EXTRACTION
 # ─────────────────────────────────────────────
 def extract_journal(user_text: str, dt: datetime) -> dict:
-    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-    model = genai.GenerativeModel(
-        model_name="gemini-pro",
-        system_instruction=build_system_prompt(dt),
+    client = Groq(api_key=st.secrets["GROQ_API_KEY"])
+    response = client.chat.completions.create(
+        model="llama3-8b-8192",
+        messages=[
+            {"role": "system", "content": build_system_prompt(dt)},
+            {"role": "user", "content": user_text},
+        ],
+        temperature=0.1,
+        max_tokens=2048,
     )
-    response = model.generate_content(user_text)
-    raw = response.text.strip()
+    raw = response.choices[0].message.content.strip()
     raw = re.sub(r"^```json\s*", "", raw)
     raw = re.sub(r"\s*```$", "", raw)
     return json.loads(raw)
