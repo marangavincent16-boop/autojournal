@@ -323,7 +323,7 @@ def build_system_prompt(dt: datetime) -> str:
 def extract_journal(user_text: str, dt: datetime) -> dict:
     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
     model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
+        model_name="gemini-2.0-flash",
         system_instruction=build_system_prompt(dt),
     )
     response = model.generate_content(user_text)
