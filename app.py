@@ -540,25 +540,34 @@ def render_entry(data, dt):
 def render_history(sb):
     try:
         result = sb.table("journal_entries").select("*").order("created_at", desc=True).limit(60).execute()
-        entries = result.data
+        raw_data = result.data
+        # Supabase sometimes returns the whole response as a string — handle all cases
+        if isinstance(raw_data, str):
+            try: raw_data = json.loads(raw_data)
+            except: raw_data = []
+        if not isinstance(raw_data, list):
+            raw_data = []
+        entries = raw_data
         valid = []
         for e in entries:
             if not isinstance(e, dict):
                 continue
-            raw = e.get("extracted_data", {})
-            if isinstance(raw, str):
-                try: raw = json.loads(raw)
-                except: raw = {}
-            if not isinstance(raw, dict):
-                raw = {}
-            if not is_empty_entry(raw):
-                e["_parsed"] = raw
+            extracted = e.get("extracted_data", {})
+            if isinstance(extracted, str):
+                try: extracted = json.loads(extracted)
+                except: extracted = {}
+            if not isinstance(extracted, dict):
+                extracted = {}
+            if not is_empty_entry(extracted):
+                e["_parsed"] = extracted
                 valid.append(e)
         if not valid:
             st.markdown('<div class="card"><p style="color:#aaa;font-size:0.85rem;text-align:center;margin:0;font-family:Montserrat;">No entries yet. Submit your first entry above.</p></div>', unsafe_allow_html=True)
             return
         for e in valid:
             raw = e["_parsed"]
+            if not isinstance(raw, dict):
+                continue
             mood = raw.get("mood") or "—"
             date_str = e.get("entry_date", "")
             entry_id = e.get("id")
