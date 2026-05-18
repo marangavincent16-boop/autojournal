@@ -85,30 +85,30 @@ st.markdown("""
   /* ── CARD HEADERS ── */
   .card-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem; font-weight: 700;
+    font-size: 1.2rem; font-weight: 900;
     margin: 0 0 1rem 0; letter-spacing: 0.02em;
   }
-  .title-general  { color: #6c63ff; }
-  .title-vision   { color: #d4af37; }
-  .title-prayer   { color: #4a90d9; }
-  .title-devotion { color: #9b59b6; }
-  .title-habit    { color: #27ae60; }
-  .title-gratitude{ color: #e67e22; }
-  .title-health   { color: #e74c3c; }
-  .title-motivation{ color: #1abc9c; }
+  .title-general  { color: #4834d4; }
+  .title-vision   { color: #b8860b; }
+  .title-prayer   { color: #1a5fa8; }
+  .title-devotion { color: #7d3c98; }
+  .title-habit    { color: #1e8449; }
+  .title-gratitude{ color: #d35400; }
+  .title-health   { color: #c0392b; }
+  .title-motivation{ color: #0e8c74; }
 
   /* ── FIELD LABELS ── */
   .fl {
     font-family: 'Oswald', sans-serif;
     font-size: 0.62rem; letter-spacing: 0.18em;
-    text-transform: uppercase; color: #999;
+    text-transform: uppercase; color: #555;
     margin-bottom: 0.15rem; margin-top: 0.6rem;
   }
   .fv {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem; color: #2c3e50;
+    font-size: 1rem; color: #1a1a2e;
     line-height: 1.5; padding-left: 0.6rem;
-    border-left: 3px solid #eee;
+    border-left: 3px solid #ccc;
     margin-bottom: 0.3rem;
   }
   .fv-accent {
@@ -134,7 +134,7 @@ st.markdown("""
   .vision-quote {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.05rem; font-style: italic;
-    color: #2c3e50; line-height: 1.7;
+    color: #1a1a2e; line-height: 1.7;
     padding: 0.8rem 1rem;
     background: linear-gradient(135deg, #fffdf5, #fff9e6);
     border-left: 4px solid #d4af37;
@@ -143,7 +143,7 @@ st.markdown("""
   }
   .goal-item {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.82rem; color: #555;
+    font-size: 0.82rem; color: #222;
     padding: 0.3rem 0 0.3rem 1rem;
     border-bottom: 1px solid #f5f5f5;
     display: flex; align-items: center; gap: 0.5rem;
@@ -151,7 +151,7 @@ st.markdown("""
   .goal-dot { color: #d4af37; font-size: 0.6rem; }
   .affirmation-item {
     font-family: 'Dancing Script', cursive;
-    font-size: 1.05rem; color: #6c63ff;
+    font-size: 1.1rem; color: #4c3fbf;
     padding: 0.2rem 0 0.2rem 0.5rem;
     border-left: 2px solid rgba(108,99,255,0.2);
     margin-bottom: 0.3rem;
@@ -171,12 +171,12 @@ st.markdown("""
   }
   .verse-text {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem; font-style: italic;
-    color: #1a3a5c; line-height: 1.6;
+    font-size: 1.1rem; font-style: italic;
+    color: #0a2540; line-height: 1.6; font-weight: 600;
   }
   .prayer-text {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.98rem; color: #2c3e50;
+    font-size: 1rem; color: #1a1a2e;
     line-height: 1.7; font-style: italic;
     padding: 0.5rem 0;
   }
@@ -200,16 +200,16 @@ st.markdown("""
     font-size: 0.78rem; font-weight: 600;
     border: 2px solid transparent;
   }
-  .habit-done-card { background: #eafaf1; border-color: #27ae60; color: #1e8449; }
-  .habit-skip-card { background: #fdf2f2; border-color: #e74c3c; color: #c0392b; }
-  .habit-na-card   { background: #f8f9fa; border-color: #ddd; color: #aaa; }
+  .habit-done-card { background: #eafaf1; border-color: #27ae60; color: #145a32; font-weight: 700; }
+  .habit-skip-card { background: #fdf2f2; border-color: #e74c3c; color: #922b21; font-weight: 700; }
+  .habit-na-card   { background: #f0f0f0; border-color: #bbb; color: #666; font-weight: 600; }
   .habit-icon { font-size: 1rem; }
   .habit-journal-area {
-    background: #f8f9fa; border: 1px solid #e9ecef;
+    background: #f0f7f0; border: 1px solid #c8e6c9;
     border-radius: 8px; padding: 0.6rem 0.8rem;
     margin-top: 0.5rem;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.92rem; color: #555; line-height: 1.5;
+    font-size: 0.98rem; color: #1a1a2e; line-height: 1.5; font-weight: 600;
   }
   .habit-journal-label {
     font-family: 'Oswald', sans-serif;
@@ -228,7 +228,7 @@ st.markdown("""
     font-size: 1.1rem; font-weight: 900; color: #e67e22;
     min-width: 1.5rem; line-height: 1;
   }
-  .grat-text { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #2c3e50; line-height: 1.4; }
+  .grat-text { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #1a1a2e; line-height: 1.4; font-weight: 600; }
   .word-box {
     background: linear-gradient(135deg, #fff8f0, #fff3e6);
     border-radius: 10px; padding: 0.8rem 1rem;
@@ -238,12 +238,12 @@ st.markdown("""
     font-family: 'Playfair Display', serif;
     font-size: 1.2rem; font-weight: 700; color: #e67e22;
   }
-  .word-def { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: #555; font-style: italic; }
+  .word-def { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #222; font-style: italic; font-weight: 600; }
   .lesson-box {
     background: #f8f5ff; border-radius: 10px;
     padding: 0.8rem 1rem; border-left: 4px solid #6c63ff;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem; color: #2c3e50; font-style: italic; line-height: 1.6;
+    font-size: 1rem; color: #1a1a2e; font-style: italic; line-height: 1.6; font-weight: 600;
   }
 
   /* ── HEALTH / FOOD ── */
@@ -259,14 +259,14 @@ st.markdown("""
   }
   .food-meal {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.82rem; color: #333; font-weight: 500;
+    font-size: 0.84rem; color: #111; font-weight: 600;
     padding: 0.25rem 0; display: flex; align-items: center; gap: 0.4rem;
   }
   .health-stat {
     display: flex; align-items: center; gap: 0.6rem;
     padding: 0.5rem 0.8rem; border-radius: 8px;
     background: #f8f9fa; margin-bottom: 0.4rem;
-    font-family: 'Montserrat', sans-serif; font-size: 0.83rem;
+    font-family: 'Montserrat', sans-serif; font-size: 0.85rem; font-weight: 600; color: #111;
   }
   .health-icon { font-size: 1.1rem; }
 
@@ -278,8 +278,8 @@ st.markdown("""
   }
   .motivation-text {
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem; font-style: italic;
-    color: #0e6655; line-height: 1.6; font-weight: 600;
+    font-size: 1.15rem; font-style: italic;
+    color: #0a4d3d; line-height: 1.6; font-weight: 700;
   }
   .motivation-dash { color: #1abc9c; font-size: 1.5rem; margin-bottom: 0.5rem; }
 
