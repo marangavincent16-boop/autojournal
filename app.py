@@ -234,6 +234,21 @@ def section_title(pdf, title, color):
     pdf.line(10, pdf.get_y(), 200, pdf.get_y())
     pdf.ln(2)
 
+def safe_text(text):
+    if not text: return ""
+    replacements = {
+        '◆': '*', '→': '->', '◈': '-', '✦': '*', '✓': 'Done',
+        '✗': 'X', '○': 'O', '•': '-', '’': "'", '‘': "'",
+        '“': '"', '”': '"', '–': '-', '—': '--',
+        '…': '...', '✝': '+', '🙏': '', '📋': '', '❤️': '',
+        '⚡': '', '🙌': '', '🗓': '', '📅': '', '📊': '', '💹': '',
+        '🪥': '', '📓': '', '🌅': '', '☀️': '', '🌙': '', '🍎': '',
+        '💡': '', '🤖': '', '💰': '', '🧘': '', '🍽️': '',
+    }
+    for k, v in replacements.items():
+        text = text.replace(k, v)
+    return text.encode('latin-1', errors='replace').decode('latin-1')
+
 def add_field(pdf, label, value):
     if not value: return
     if isinstance(value, list): value = "  ·  ".join([str(v) for v in value if v])
@@ -242,7 +257,7 @@ def add_field(pdf, label, value):
     pdf.cell(0, 5, label.upper(), new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("Helvetica", "", 9)
     pdf.set_text_color(30, 30, 50)
-    pdf.multi_cell(0, 5, str(value))
+    pdf.multi_cell(0, 5, safe_text(str(value)))
     pdf.ln(1)
 
 def generate_pdf(data, dt, raw_text=""):
@@ -266,7 +281,7 @@ def generate_pdf(data, dt, raw_text=""):
     section_title(pdf, "CIPHER GHOST · 5-YEAR VISION", (180, 140, 50))
     pdf.set_font("Helvetica", "I", 8)
     pdf.set_text_color(50, 50, 80)
-    pdf.multi_cell(0, 5, CG_VISION)
+    pdf.multi_cell(0, 5, safe_text(CG_VISION))
     pdf.ln(1)
     pdf.set_font("Helvetica", "B", 7)
     pdf.set_text_color(100,100,120)
@@ -274,7 +289,7 @@ def generate_pdf(data, dt, raw_text=""):
     pdf.set_font("Helvetica", "", 8)
     pdf.set_text_color(30,30,50)
     for g in CG_GOALS:
-        pdf.cell(0, 4.5, f"  ◆  {g}", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 4.5, f"  * {g}", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(2)
     pdf.set_font("Helvetica", "B", 7)
     pdf.set_text_color(100,100,120)
@@ -282,7 +297,7 @@ def generate_pdf(data, dt, raw_text=""):
     pdf.set_font("Helvetica", "I", 8)
     pdf.set_text_color(76,63,191)
     for a in CG_AFFIRMATIONS:
-        pdf.cell(0, 4.5, f"  {a}", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 4.5, safe_text(f"  {a}"), new_x="LMARGIN", new_y="NEXT")
     pdf.ln(3)
 
     # Prayer
@@ -307,7 +322,7 @@ def generate_pdf(data, dt, raw_text=""):
     # Habits
     section_title(pdf, "HABIT TRACKER", (30, 132, 73))
     ht = data.get("habit_tracker") or {}
-    def status_str(s): return "✓ Done" if str(s or "").lower()=="done" else ("✗ Skipped" if s else "○ N/A")
+    def status_str(s): return "Done" if str(s or "").lower()=="done" else ("Skipped" if s else "N/A")
     pdf.set_font("Helvetica", "", 9)
     pdf.set_text_color(30,30,50)
     pdf.cell(45, 5, f"Journal: {status_str(ht.get('daily_journal'))}")
@@ -327,7 +342,7 @@ def generate_pdf(data, dt, raw_text=""):
             pdf.cell(8, 5, str(i)+".")
             pdf.set_font("Helvetica", "", 9)
             pdf.set_text_color(30,30,50)
-            pdf.multi_cell(0, 5, str(p))
+            pdf.multi_cell(0, 5, safe_text(str(p)))
     wod = data.get("word_of_day") or {}
     if isinstance(wod, str): wod = {"word": wod}
     if wod.get("word"): add_field(pdf, "Word of the Day", f'{wod["word"]} — {wod.get("definition","")}')
@@ -350,7 +365,7 @@ def generate_pdf(data, dt, raw_text=""):
         section_title(pdf, "DAILY MOTIVATION", (14, 140, 116))
         pdf.set_font("Helvetica", "BI", 10)
         pdf.set_text_color(14, 77, 61)
-        pdf.multi_cell(0, 6, f'"{data["daily_motivation"]}"')
+        pdf.multi_cell(0, 6, safe_text(str(data.get("daily_motivation", ""))))
         pdf.ln(2)
 
     # Raw entry
@@ -358,7 +373,7 @@ def generate_pdf(data, dt, raw_text=""):
         section_title(pdf, "ORIGINAL JOURNAL ENTRY", (100, 100, 120))
         pdf.set_font("Helvetica", "I", 8)
         pdf.set_text_color(80, 80, 100)
-        pdf.multi_cell(0, 5, raw_text)
+        pdf.multi_cell(0, 5, safe_text(raw_text))
 
     buf = io.BytesIO()
     pdf.output(buf)
@@ -385,7 +400,7 @@ def render_entry(data, dt):
     st.markdown(f'<div class="vision-quote">{CG_VISION}</div>', unsafe_allow_html=True)
     st.markdown('<div class="fl">Goals & Manifestations</div>', unsafe_allow_html=True)
     for g in CG_GOALS:
-        st.markdown(f'<div class="goal-item"><span style="color:#d4af37;font-size:0.6rem;">◆</span>{g}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="goal-item"><span style="color:#d4af37;font-size:0.6rem;">*</span>{g}</div>', unsafe_allow_html=True)
     st.markdown('<div class="fl" style="margin-top:0.8rem;">Daily Affirmations</div>', unsafe_allow_html=True)
     for a in CG_AFFIRMATIONS:
         st.markdown(f'<div class="affirmation-item">{a}</div>', unsafe_allow_html=True)
@@ -447,7 +462,7 @@ def render_entry(data, dt):
         if gm.get("next_month_objectives"):
             st.markdown('<div class="fl">Next Month</div>', unsafe_allow_html=True)
             for o in (gm["next_month_objectives"] or [])[:3]:
-                if o: st.markdown(f'<div class="goal-item"><span style="color:#d35400;">→</span>{o}</div>', unsafe_allow_html=True)
+                if o: st.markdown(f'<div class="goal-item"><span style="color:#d35400;">-></span>{o}</div>', unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
     # Health
